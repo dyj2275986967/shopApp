@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zx.mapper.OrderItemMapper">
+<select id="selectOrderItemMsg"   resultMap="itemMapper">
+ 
+select * from ec_order_item where order_id=#{id}
+</select>
+
+<resultMap type="com.zx.vo.OrderItemVo" id="itemMapper">
+ <result column="order_num" property="orderNum"/>
+
+   
+<association property="article" column="article_id" select="com.zx.mapper.ArticleMapper.findArticleMsgById"></association>
+
+</resultMap>
+
+
+
+</mapper>

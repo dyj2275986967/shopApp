@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zx.mapper.ShopcarMapper">
+<select id="findArticleMsgByUserIdAndArticleId"  resultMap="ShopcarMapper">
+
+select * from ec_article,ec_shopcar where id= article_id and user_id=#{id}
+</select>
+
+<select id="findShopCarMsg" resultMap="ShopcarMapper">
+select *  from ec_shopcar where user_id=#{userId}  and article_id=#{articleId} 
+</select>
+
+<resultMap type="com.zx.vo.ShopCarVo" id="ShopcarMapper">
+<result column="user_id" property="userId"/>
+
+<result column="article_id" property="articleId"/>
+
+
+
+<association property="article" column="article_id"  select="com.zx.mapper.ArticleMapper.findArticleMsgById" ></association>
+</resultMap>
+
+
+
+
+
+
+</mapper>

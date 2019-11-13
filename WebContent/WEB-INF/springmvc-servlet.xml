@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+       
+         <!-- 声明登录拦截器 -->
+    <mvc:interceptors>
+    
+        <mvc:interceptor>
+            <!-- mvc:mapping:指定拦截哪些请求
+                 mvc:exclude-mapping:排除哪些请求
+             -->
+             <!-- http://localhost:8080/SpringMvcDemo4/list.do -->
+         <!--    <mvc:mapping path="/*.do"/> -->
+            <!-- http://localhost:8080/SpringMvcDemo4/user/list.do -->
+            <mvc:mapping path="/*/*.do"/>
+            <bean class="com.zx.interceptor.LoginIninterceptor"></bean>
+        </mvc:interceptor>
+     
+               <mvc:interceptor>
+            <!-- mvc:mapping:指定拦截哪些请求
+                 mvc:exclude-mapping:排除哪些请求
+             -->
+             <!-- http://localhost:8080/SpringMvcDemo4/list.do -->
+         <!--    <mvc:mapping path="/*.do"/> -->
+            <!-- http://localhost:8080/SpringMvcDemo4/user/list.do -->
+            <!--  拦截所有请求-->
+            <mvc:mapping path="/*/*"/>
+            <bean class="com.zx.interceptor.CookieInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    
+    
+    
+       
+        
+    <!-- 自动扫描该包，SpringMVC会将包下用了@controller注解的类注册为Spring的controller -->
+    <context:component-scan base-package="com.zx.web"></context:component-scan>
+      
+    
+    <!-- 用默认的Servlet的方案处理静态资源 ，类似于放行静态资源-->
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+    
+    <!-- 加上  mvc:default-servlet-handler 配置之后，会导致后端处理器失效 ，通过加上如下配置即可-->
+    <mvc:annotation-driven/>
+       
+	<!-- 视图解析器  -->
+     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+             <!--  前缀-->
+             <property name="prefix">
+             <value >/WEB-INF/view/front/</value>
+             </property>
+             <!--  后缀-->
+             
+      <property name="suffix">
+             <value >.jsp</value>
+             </property>
+              
+     
+     </bean> 
+       
+       
+       
+       
+       
+       
+       
+        </beans>

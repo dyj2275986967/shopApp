@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:util="http://www.springframework.org/schema/util"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://mybatis.org/schema/mybatis-spring 
+		http://mybatis.org/schema/mybatis-spring-1.2.xsd">
+		
+		<!-- 
+		   指定mybatis持久化接口以及配置文件所在位置
+		 -->
+		<mybatis:scan base-package="com.zx.mapper"></mybatis:scan>
+		
+	   
+		
+		<!-- 
+		   指定组件扫描包的位置信息
+		   @Service
+		 -->
+		<context:component-scan base-package="com.zx.service"></context:component-scan>
+        
+        
+        <!-- 配置数据源 
+        com.mchange.v2.c3p0.ComboPooledDataSource：默认会加载 src下的c3p0.properties文件
+        
+                  文件中的key必须以  c3p0开头
+        
+        -->
+        <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"></bean>
+      
+        <!-- 配置SqlSessionFactory  SqlSessionFactory可以用于获取连接-->
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+        p:dataSource-ref="dataSource"></bean>
+        
+        
+        <!-- 配置事务管理器 -->
+        <bean id="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+         p:dataSource-ref="dataSource"></bean>
+        
+        <!-- 开启注解事务管理 -->
+        <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+</beans>
